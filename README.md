@@ -9,7 +9,7 @@ Check out the samples.md and our API documentation(http://docs.synapsepay.com/v3
 
 ## Installation
 
-gem install synapse_pay_rest
+npm install synapse_pay_rest
 
 ## License
 
