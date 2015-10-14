@@ -43,7 +43,6 @@ var RestClient = function(options){
 };
 
 RestClient.prototype.get = function(path, callback, addUserId){
-	console.log(this.baseUrl + path);
 	var self = this;
 	axios({
 		url: this.baseUrl + path,
@@ -55,12 +54,11 @@ RestClient.prototype.get = function(path, callback, addUserId){
 		}
 		callback(response.data);
 	}).catch(function(response){
-		callback(response)
+		callback(response.data)
 	});
 };
 
 RestClient.prototype.post = function(path, payload, callback, addUserId, setOauth){
-	console.log(this.baseUrl + path);
 	var self = this;
 	axios({
 		url: this.baseUrl + path,
@@ -76,13 +74,11 @@ RestClient.prototype.post = function(path, payload, callback, addUserId, setOaut
 		}
 		callback(response.data)
 	}).catch(function(response){
-		callback(response)
+		callback(response.data)
 	});
 };
 
 RestClient.prototype.patch = function(path, payload, callback){
-	console.log(this.baseUrl + path);
-
 	axios({
 		url: this.baseUrl + path,
 		method: 'patch',
@@ -91,13 +87,11 @@ RestClient.prototype.patch = function(path, payload, callback){
 	}).then(function(response){
 		callback(response.data)
 	}).catch(function(response){
-		callback(response)
+		callback(response.data)
 	});
 };
 
 RestClient.prototype.del = function(path, callback){
-	console.log(this.baseUrl + path);
-
 	axios({
 		url: this.baseUrl + path,
 		method: 'delete',
@@ -105,7 +99,7 @@ RestClient.prototype.del = function(path, callback){
 	}).then(function(response){
 		callback(response.data)
 	}).catch(function(response){
-		callback(response)
+		callback(response.data)
 	});
 };
 
