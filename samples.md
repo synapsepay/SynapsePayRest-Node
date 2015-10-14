@@ -128,7 +128,7 @@ var file_response = client.User.attachFile('https://s3.amazonaws.com/synapse_dja
 
 var nodes_response = client.Node.get(null, callback)
 
-# Add Synapse Node
+# Add SYNAPSE-US Node
 
 var synapse_node_payload = {
 	"type" : "SYNAPSE-US",
@@ -142,7 +142,7 @@ var synapse_node_payload = {
 
 var synapse_node_response = client.Node.add(synapse_node_payload, callback);
 
-# Add ACH Node through Account and Routing Number Details
+# Add ACH-US Node through Account and Routing Number Details
 
 var acct_rout_payload = {
 	"type" : "ACH-US",
@@ -162,7 +162,7 @@ var acct_rout_payload = {
 var acct_rout_response = client.Node.add(acct_rout_payload, callback);
 
 
-# Verify Micro-Deposits on ACH Node
+# Verify ACH-US via Micro-Deposits
 
 var micro_payload = {
 	"micro" : [0.1,0.1]
@@ -170,7 +170,7 @@ var micro_payload = {
 
 micro_response = client.Node.verify(NODE_ID, micro_payload, callback);
 
-# Add ACH node through account login
+# Add ACH-US node through account login
 
 var login_payload = {
 	"type" : "ACH-US",
@@ -184,7 +184,7 @@ var login_payload = {
 var login_response = client.Node.add(login_payload, callback);
 
 
-# Verify Login Node
+# Verify ACH-US via MFA
 
 var mfa_payload = {
 	"access_token" : ACCESS_TOKEN_IN_LOGIN_RESPONSE,
