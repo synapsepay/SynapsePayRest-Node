@@ -1,4 +1,6 @@
 var HelperFunctions = require('../HelperFunctions');
+var axios = require('axios');
+var util = require('util');
 
 var User = function(client){
 	this.client = client;
@@ -57,14 +59,24 @@ User.prototype.answerKBA = function(payload, callback){
 	this.client.patch(path, payload, callback);
 };
 
-User.prototype.attachFile = function(base64File, callback){
+User.prototype.attachFile = function(filePath, callback){
 	var path = this.createUserPath(this.client.userId);
-	var payload = {
-		doc:{
-			attachment: base64File
-		}
-	};
-	this.client.patch(path, payload, callback);
+	var self = this;
+	axios({
+		url: filePath,
+		method: 'get'
+	}).then(function(response){
+		var data = new Buffer(response.data).toString('base64');
+	    var base64File = util.format("data:%s;base64,%s", mime.lookup(src), data);
+		var payload = {
+			doc:{
+				attachment: base64File
+			}
+		};
+		self.client.patch(path, payload, callback);
+	}).catch(function(response){
+		callback(HelperFunctions.createCustomError('Could not download file.'));
+	});
 };
 
 
