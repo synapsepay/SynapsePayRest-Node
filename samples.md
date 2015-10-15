@@ -57,15 +57,15 @@ var create_payload = {
 	}
 };
 
-var create_response = client.User.create(create_payload, callback);
+var create_response = client.Users.create(create_payload, callback);
 
 # Get User
 
-var user_response = client.User.get(USER_ID, callback);
+var user_response = client.Users.get(USER_ID, callback);
 
 # Get All Users
 
-var users_response = client.User.get({}, callback);
+var users_response = client.Users.get({}, callback);
 
 # Get Oauth Key
 
@@ -73,7 +73,7 @@ var oauth_payload = {
 	"refresh_token" :  USER_REFRESH_TOKEN
 };
 
-var oauth_response = client.User.refresh(oauth_payload, callback);
+var oauth_response = client.Users.refresh(oauth_payload, callback);
 
 
 # Add KYC Information
@@ -93,7 +93,7 @@ var ssn_payload = {
 	}
 };
 
-var ssn_response = client.User.add_doc(ssn_payload, callback);
+var ssn_response = client.Users.add_doc(ssn_payload, callback);
 
 
 # Answer KBA Questions
@@ -111,11 +111,11 @@ var kba_payload = {
 	}
 };
 
-var kba_response = client.User.answer_kba(kba_payload, callback);
+var kba_response = client.Users.answer_kba(kba_payload, callback);
 
 # Attach File
 
-var file_response = client.User.attachFile('https://s3.amazonaws.com/synapse_django/static_assets/marketing/images/synapse_dark.png', callback);
+var file_response = client.Users.attachFile('https://s3.amazonaws.com/synapse_django/static_assets/marketing/images/synapse_dark.png', callback);
 
 ```
 
@@ -126,7 +126,7 @@ var file_response = client.User.attachFile('https://s3.amazonaws.com/synapse_dja
 
 # Get All Nodes
 
-var nodes_response = client.Node.get(null, callback)
+var nodes_response = client.Nodes.get(null, callback)
 
 # Add SYNAPSE-US Node
 
@@ -140,7 +140,7 @@ var synapse_node_payload = {
 	}
 };
 
-var synapse_node_response = client.Node.add(synapse_node_payload, callback);
+var synapse_node_response = client.Nodes.add(synapse_node_payload, callback);
 
 # Add ACH-US Node through Account and Routing Number Details
 
@@ -159,7 +159,7 @@ var acct_rout_payload = {
 	}
 };
 
-var acct_rout_response = client.Node.add(acct_rout_payload, callback);
+var acct_rout_response = client.Nodes.add(acct_rout_payload, callback);
 
 
 # Verify ACH-US via Micro-Deposits
@@ -168,7 +168,7 @@ var micro_payload = {
 	"micro" : [0.1,0.1]
 };
 
-micro_response = client.Node.verify(NODE_ID, micro_payload, callback);
+micro_response = client.Nodes.verify(NODE_ID, micro_payload, callback);
 
 # Add ACH-US node through account login
 
@@ -181,7 +181,7 @@ var login_payload = {
 	}
 };
 
-var login_response = client.Node.add(login_payload, callback);
+var login_response = client.Nodes.add(login_payload, callback);
 
 
 # Verify ACH-US via MFA
@@ -191,11 +191,11 @@ var mfa_payload = {
 	"mfa_answer" : "test_answer"
 };
 
-var mfa_response = client.Node.verify(mfa_payload, callback);
+var mfa_response = client.Nodes.verify(mfa_payload, callback);
 
 # Delete a Node
 
-var delete_response = client.Node.delete(NODE_ID, callback);
+var delete_response = client.Nodes.delete(NODE_ID, callback);
 
 ```
 

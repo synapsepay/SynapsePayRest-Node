@@ -1,11 +1,11 @@
 var HelperFunctions = require('../HelperFunctions');
 var request = require('request');
 
-var User = function(client){
+var Users = function(client){
 	this.client = client;
 };
 
-User.prototype.createUserPath = function(userId){
+Users.prototype.createUserPath = function(userId){
 	var path = '/users';
 	if(userId){
 		path += '/' + userId.toString();
@@ -13,7 +13,7 @@ User.prototype.createUserPath = function(userId){
 	return path;
 };
 
-User.prototype.get = function(options, callback){
+Users.prototype.get = function(options, callback){
 	var path = this.createUserPath();
 	var addUserId = false;
 	if(options.userId){
@@ -32,32 +32,32 @@ User.prototype.get = function(options, callback){
 	this.client.get(path, callback);
 };
 
-User.prototype.refresh = function(payload, callback){
+Users.prototype.refresh = function(payload, callback){
 	var path = '/oauth/' + this.client.userId;
 	this.client.post(path, payload, callback, false, true);
 }
 
-User.prototype.update = function(payload, callback){
+Users.prototype.update = function(payload, callback){
 	var path = this.createUserPath(this.client.userId);
 	this.client.patch(path, payload, callback);
 }
 
-User.prototype.create = function(payload, callback){
+Users.prototype.create = function(payload, callback){
 	var path = this.createUserPath();
 	this.client.post(path, payload, callback, true);
 };
 
-User.prototype.addDoc = function(payload, callback){
+Users.prototype.addDoc = function(payload, callback){
 	var path = this.createUserPath(this.client.userId);
 	this.client.patch(path, payload, callback);
 }
 
-User.prototype.answerKBA = function(payload, callback){
+Users.prototype.answerKBA = function(payload, callback){
 	var path = this.createUserPath(this.client.userId);
 	this.client.patch(path, payload, callback);
 };
 
-User.prototype.attachFile = function(filePath, callback){
+Users.prototype.attachFile = function(filePath, callback){
 	var path = this.createUserPath(this.client.userId);
 	var self = this;
 	request({url: filePath, encoding: 'binary'}, function(error, response, body){
@@ -78,4 +78,4 @@ User.prototype.attachFile = function(filePath, callback){
 };
 
 
-module.exports = User;
+module.exports = Users;

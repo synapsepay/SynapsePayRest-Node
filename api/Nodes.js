@@ -1,8 +1,8 @@
-var Node = function(client){
+var Nodes = function(client){
 	this.client = client;
 };
 
-Node.prototype.createNodePath = function(nodeId){
+Nodes.prototype.createNodePath = function(nodeId){
 	var path = '/users/' + this.client.userId + '/nodes';
 	if(nodeId){
 		path += '/' + nodeId;
@@ -10,12 +10,12 @@ Node.prototype.createNodePath = function(nodeId){
 	return path;
 };
 
-Node.prototype.add = function(payload, callback){
+Nodes.prototype.add = function(payload, callback){
 	var path = this.createNodePath();
 	this.client.post(path, payload, callback);
 };
 
-Node.prototype.get = function(options, callback){
+Nodes.prototype.get = function(options, callback){
 	var path = this.createNodePath();
 	if(options.node_id){
 		path += '/' + options.node_id;
@@ -23,7 +23,7 @@ Node.prototype.get = function(options, callback){
 	this.client.get(path, callback);
 };
 
-Node.prototype.verify = function(options, payload, callback){
+Nodes.prototype.verify = function(options, payload, callback){
 	var path = this.createNodePath();
 	if(options.node_id){
 		path += '/' + options.node_id;
@@ -33,9 +33,9 @@ Node.prototype.verify = function(options, payload, callback){
 	}
 };
 
-Node.prototype.delete = function(nodeId, callback){
+Nodes.prototype.delete = function(nodeId, callback){
 	var path = this.createNodePath(nodeId);
 	this.client.del(path, callback);
 };
 
-module.exports = Node;
+module.exports = Nodes;

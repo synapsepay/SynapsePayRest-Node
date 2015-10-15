@@ -1,4 +1,5 @@
 var axios = require('axios');
+var HelperFunctions = require('./HelperFunctions.js');
 
 var RestClient = function(options){
 
@@ -54,14 +55,15 @@ RestClient.prototype.get = function(path, callback, addUserId){
 		}
 		callback(response.data);
 	}).catch(function(response){
-		callback(response.data)
+		var message_object = self.handleError(response);
+		callback(message_object);
 	});
 };
 
 RestClient.prototype.post = function(path, payload, callback, addUserId, setOauth){
 	var self = this;
 	axios({
-		url: this.baseUrl + path,
+		url: this.baseUrl + path +':81',
 		method: 'post',
 		data: payload,
 		headers: this.headers
@@ -72,13 +74,15 @@ RestClient.prototype.post = function(path, payload, callback, addUserId, setOaut
 		if(setOauth){
 			self.headers['X-SP-USER'] = response.data.oauth_key + self.headers['X-SP-USER'];
 		}
-		callback(response.data)
+		callback(response.data);
 	}).catch(function(response){
-		callback(response.data)
+		var message_object = self.handleError(response);
+		callback(message_object);
 	});
 };
 
 RestClient.prototype.patch = function(path, payload, callback){
+	var self = this;
 	axios({
 		url: this.baseUrl + path,
 		method: 'patch',
@@ -87,66 +91,87 @@ RestClient.prototype.patch = function(path, payload, callback){
 	}).then(function(response){
 		callback(response.data)
 	}).catch(function(response){
-		callback(response.data)
+		var message_object = self.handleError(response);
+		callback(message_object);
 	});
 };
 
 RestClient.prototype.del = function(path, callback){
+	var self = this;
 	axios({
 		url: this.baseUrl + path,
 		method: 'delete',
 		headers: this.headers
 	}).then(function(response){
-		callback(response.data)
+		callback(response.data);
 	}).catch(function(response){
-		callback(response.data)
+		var message_object = self.handleError(response);
+		callback(message_object);
 	});
 };
 
-RestClient.prototype.successHandler = function(r){
-	return r.json()
-}
+RestClient.prototype.successHandler = function(data){
+	return data;
+};
 
-RestClient.prototype.badRequestHandler = function(r){
-	return r.json()
-}
+RestClient.prototype.badRequestHandler = function(data){
+	return data;
+};
 
-RestClient.prototype.unauthorizedHandler = function(r){
-	return r.json()
-}
+RestClient.prototype.unauthorizedHandler = function(data){
+	return data;
+};
 
-RestClient.prototype.requestFailedHandler = function(r){
-	report_error(r)
+RestClient.prototype.requestFailedHandler = function(data){
 	return {
 		"error": {
 			"en": "An error has occured in this library."
 		},
 		"success": false
-	}
-}
+	};
+};
 
-RestClient.prototype.notFoundHandler = function(r){
-	report_error(r)
+RestClient.prototype.notFoundHandler = function(data){
 	return {
 		"error": {
 			"en": "The url is not found."
 		},
 		"success": false
 	}
-}
+};
 
-RestClient.prototype.incorrectValuesHandler = function(r){
-	return r.json()
-}
+RestClient.prototype.incorrectValuesHandler = function(data){
+	return data;
+};
 
-RestClient.prototype.serverErrorHandler = function(r){
-	report_error(r)
+RestClient.prototype.serverErrorHandler = function(data){
 	return {
 		"error": {
 			"en": "Server Error."
 		},
 		"success": false
-	}
-}
+	};
+};
+
+RestClient.prototype.handleError = function(response){
+	if (response instanceof Error) {
+		// Something happened in setting up the request that triggered an Error
+		// console.log('Error', response.message);
+		return HelperFunctions.createCustomError(response.message);
+    } else {
+		// The request was made, but the server responded with a status code
+		// that falls out of the range of 2xx
+		console.log(response.data);
+		console.log(response.status);
+		console.log(response.headers);
+		console.log(response.config);
+		if (this.responseHandlers.hasOwnProperty(response.status)){
+			return this.responseHandlers[response.status](response.data);
+		}else{
+			var message = HelperFunctions.createCustomError(response.data);
+			console.log(message);
+		}
+    }
+};
 
 module.exports = RestClient;

@@ -1,6 +1,6 @@
 var RestClient = require('./RestClient');
-var User = require('./api/User');
-var Node = require('./api/Node');
+var Users = require('./api/Users');
+var Nodes = require('./api/Nodes');
 var Trans = require('./api/Trans');
 
 var SynapsePayClient = function(options){
@@ -9,8 +9,8 @@ var SynapsePayClient = function(options){
 
 	return {
 		Client: client,
-		User: new User(client),
-		Node: new Node(client),
+		Users: new Users(client),
+		Nodes: new Nodes(client),
 		Trans: new Trans(client)
 	}
 };
