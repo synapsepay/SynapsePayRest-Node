@@ -76,7 +76,7 @@ var oauth_payload = {
 var oauth_response = client.Users.refresh(oauth_payload, callback);
 
 
-# Add KYC Information
+# Add KYC Information. Requires Oauth token of the user so make sure you get Oauth Token of the user, put it in HTTP headers and then make the call. 
 
 var ssn_payload = {
 		"doc" : {
@@ -93,8 +93,7 @@ var ssn_payload = {
 	}
 };
 
-var ssn_response = client.Users.add_doc(ssn_payload, callback);
-
+var ssn_response = client.Users.addDoc(ssn_payload, callback);
 
 # Answer KBA Questions
 
