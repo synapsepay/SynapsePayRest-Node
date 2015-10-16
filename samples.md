@@ -95,7 +95,7 @@ var ssn_payload = {
 	}
 };
 
-var ssn_response = client.Users.add_doc(ssn_payload, callback);
+var ssn_response = client.Users.addDoc(ssn_payload, callback);
 
 
 # Answer KBA Questions
@@ -113,7 +113,7 @@ var kba_payload = {
 	}
 };
 
-var kba_response = client.Users.answer_kba(kba_payload, callback);
+var kba_response = client.Users.answerKBA(kba_payload, callback);
 
 # Attach File
 
