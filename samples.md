@@ -13,7 +13,9 @@ var headers = {
 	'development_mode' :  true #true will ping sandbox.synapsepay.com while false will ping synapsepay.com
 };
 
-var client = SynapsePayClient(headers);
+USER_ID = ID of user # optional
+
+var client = SynapsePayClient(headers, USER_ID);
 
 ```
 
