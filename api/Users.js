@@ -1,5 +1,7 @@
 var HelperFunctions = require('../HelperFunctions');
 var request = require('request');
+var fs = require('fs');
+var mime = require('mime');
 
 var Users = function(client){
 	this.client = client;
@@ -60,12 +62,11 @@ Users.prototype.answerKBA = function(payload, callback){
 Users.prototype.attachFile = function(filePath, callback){
 	var path = this.createUserPath(this.client.userId);
 	var self = this;
-	request({url: filePath, encoding: 'binary'}, function(error, response, body){
-		if(error){
-			callback(HelperFunctions.createCustomError('Could not download file.'));
-		}else{
-			var fileType = response.headers['content-type'];
-			var base64 = new Buffer(body, 'binary').toString('base64');
+	try{
+		fs.statSync(filePath);
+		fs.readFile(filePath, function(err, original_data){
+			var fileType = mime.lookup(filePath);
+			var base64 = new Buffer(original_data, 'binary').toString('base64');
 			var dataURI = 'data:' + fileType + ';base64,' + base64;
 			var payload = {
 				doc:{
@@ -73,8 +74,25 @@ Users.prototype.attachFile = function(filePath, callback){
 				}
 			};
 			self.client.patch(path, payload, callback);
-		}
-	})
+		});
+
+	}catch(err){
+		request({url: filePath, encoding: 'binary'}, function(error, response, body){
+			if(error){
+				callback(HelperFunctions.createCustomError('Could not download file.'));
+			}else{
+				var fileType = response.headers['content-type'];
+				var base64 = new Buffer(body, 'binary').toString('base64');
+				var dataURI = 'data:' + fileType + ';base64,' + base64;
+				var payload = {
+					doc:{
+						attachment: dataURI
+					}
+				};
+				self.client.patch(path, payload, callback);
+			}
+		})
+	}
 };
 
 
