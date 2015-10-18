@@ -18,6 +18,11 @@ Users.prototype.createUserPath = function(userId){
 Users.prototype.get = function(options, callback){
 	var path = this.createUserPath();
 	var addUserId = false;
+
+	if(typeof options === 'string'){
+		options = {userId: options};
+	}
+	
 	if(options.userId){
 		addUserId = true;
 		path = this.createUserPath(options.userId);
