@@ -1,7 +1,7 @@
 var axios = require('axios');
 var HelperFunctions = require('./HelperFunctions.js');
 
-var RestClient = function(options){
+var RestClient = function(options, userId){
 
 	var xSpGateway = options.client_id + '|' + options.client_secret;
 
@@ -30,7 +30,7 @@ var RestClient = function(options){
 		'X-SP-LANG':xSpLang
 	};
 
-	this.userId = options.userId;
+	this.userId = userId;
 
 	this.responseHandlers = {
 		200: this.successHandler,

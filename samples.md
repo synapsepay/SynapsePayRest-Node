@@ -63,7 +63,13 @@ var create_response = client.Users.create(create_payload, callback);
 
 # Get User
 
-var user_response = client.Users.get(USER_ID, callback);
+var options = {
+	page: '',
+	query: '',
+	userId: ''
+};
+
+var user_response = client.Users.get(options, callback);
 
 # Get All Users
 
