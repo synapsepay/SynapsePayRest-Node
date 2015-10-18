@@ -31,7 +31,7 @@ Users.prototype.get = function(options, callback){
 			path += '?page=' + options.page.toString();
 		}
 	}
-	this.client.get(path, callback);
+	this.client.get(path, callback, addUserId);
 };
 
 Users.prototype.refresh = function(payload, callback){
