@@ -5,7 +5,7 @@
 var SynapsePayClient = require('synapse_pay_rest');
 
 var headers = {
-	'ouath_key' : USER_OAUTH KEY, # Optional
+	'oauth_key' : USER_OAUTH KEY, # Optional
 	'fingerprint' : USER_FINGERPRINT,
 	'client_id' :  YOUR_CLIENT_ID,
 	'client_secret' :  YOUR_CLIENT_SECRET,
@@ -134,7 +134,11 @@ var file_response = client.Users.attachFile('https://s3.amazonaws.com/synapse_dj
 
 # Get All Nodes
 
-var nodes_response = client.Nodes.get(null, callback)
+var nodes_response = client.Nodes.get({}, callback);
+
+# Get a Specific Node
+
+var node_response = client.Nodes.get({node_id: NODE_ID}, callback);
 
 # Add SYNAPSE-US Node
 
