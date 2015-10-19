@@ -18,12 +18,12 @@ Users.prototype.createUserPath = function(userId){
 Users.prototype.get = function(options, callback){
 	var path = this.createUserPath();
 	var addUserId = false;
-	if(options.userId){
+	if(options.user_id){
 		addUserId = true;
-		path = this.createUserPath(options.userId);
+		path = this.createUserPath(options.user_id);
 	}else{
 		if(options.query){
-			path += '?query=' + query.toString();
+			path += '?query=' + options.query;
 			if(options.page){
 				path += '&page=' + options.page.toString();
 			}

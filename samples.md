@@ -65,8 +65,9 @@ var create_response = client.Users.create(create_payload, callback);
 
 var options = {
 	page: '',
+	per_page: '',
 	query: '',
-	userId: ''
+	user_id: ''
 };
 
 var user_response = client.Users.get(options, callback);
@@ -131,6 +132,13 @@ var file_response = client.Users.attachFile('https://s3.amazonaws.com/synapse_dj
 ## Node API Calls
 
 ```javascript
+
+var options = {
+	page: '',
+	per_page: '',
+	node_id: '',
+	type: ''
+};
 
 # Get All Nodes
 
@@ -244,13 +252,20 @@ var trans_payload = {
 
 var create_response = client.Trans.create(NODE_ID, trans_payload, callback);
 
+var options = {
+	page: '',
+	per_page: '',
+	trans_id: '',
+	node_id: '' #MANDATORY
+};
+
 # Get a Transaction
 
-var transaction_response = client.Trans.get(NODE_ID, TRANS_ID, callback);
+var transaction_response = client.Trans.get(options, TRANS_ID, callback);
 
 # Get All Transactions
 
-var transactions_response = client.Trans.get(NODE_ID, callback);
+var transactions_response = client.Trans.get(options, callback);
 
 
 # Update Transaction
