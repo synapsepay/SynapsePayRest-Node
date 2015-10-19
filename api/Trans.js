@@ -25,10 +25,17 @@ Trans.prototype.delete = function(nodeId, transId, callback){
 	this.client.del(path, callback);
 };
 
-Trans.prototype.get = function(nodeId, transId, callback){
-	var path = this.createTransactionPath(this.client.userId, nodeId);
-	if(transId){
+Trans.prototype.get = function(options, callback){
+	var path = this.createTransactionPath(this.client.userId, options.node_id);
+	if(options.transId){
 		path += '/' + transId;
+	}else if(options.page){
+		path += '?page='+options.page;
+		if(options.per_page){
+			path += '&per_page='+options.per_page;
+		}
+	}else if(options.per_page){
+		path += '?per_page='+options.per_page;
 	}
 	this.client.get(path, callback);
 };
