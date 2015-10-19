@@ -27,8 +27,16 @@ Users.prototype.get = function(options, callback){
 			if(options.page){
 				path += '&page=' + options.page.toString();
 			}
+			if(options.per_page){
+				path += '&per_page='+options.per_page;
+			}
 		}else if(options.page){
 			path += '?page=' + options.page.toString();
+			if(options.per_page){
+				path += '&per_page='+options.per_page;
+			}
+		}else if(options.per_page){
+			path += '?per_page'+options.per_page;
 		}
 	}
 	this.client.get(path, callback, addUserId);
