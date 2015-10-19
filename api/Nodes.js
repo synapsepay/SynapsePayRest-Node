@@ -19,6 +19,21 @@ Nodes.prototype.get = function(options, callback){
 	var path = this.createNodePath();
 	if(options.node_id){
 		path += '/' + options.node_id;
+	}else if(options.page){
+		path += '?page='+options.page;
+		if(options.per_page){
+			path += '&per_page='+options.per_page;
+		}
+		if(options.type){
+			path += '&type='+options.type;
+		}
+	}else if(options.per_page){
+		path += '?per_page='+options.per_page;
+		if(options.type){
+			path += '&type='+options.type;
+		}
+	}else if(options.type){
+		path += '?type='+options.type;
 	}
 	this.client.get(path, callback);
 };
