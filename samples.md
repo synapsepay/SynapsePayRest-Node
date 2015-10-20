@@ -211,7 +211,7 @@ var mfa_payload = {
 	"mfa_answer" : "test_answer"
 };
 
-var mfa_response = client.Nodes.verify(mfa_payload, callback);
+var mfa_response = client.Nodes.add(mfa_payload, callback);
 
 # Delete a Node
 

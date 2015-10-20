@@ -38,10 +38,10 @@ Nodes.prototype.get = function(options, callback){
 	this.client.get(path, callback);
 };
 
-Nodes.prototype.verify = function(options, payload, callback){
+Nodes.prototype.verify = function(nodeId, payload, callback){
 	var path = this.createNodePath();
-	if(options.node_id){
-		path += '/' + options.node_id;
+	if(nodeId){
+		path += '/' + nodeId;
 		this.client.patch(path, payload, callback);
 	}else{
 		this.client.post(path, payload, callback);
