@@ -3,6 +3,8 @@ var HelperFunctions = require('./HelperFunctions.js');
 
 var RestClient = function(options, userId){
 
+	this.options = options;
+
 	var xSpGateway = options.client_id + '|' + options.client_secret;
 
 	var xSpUser = '|' + options.fingerprint;
@@ -72,7 +74,7 @@ RestClient.prototype.post = function(path, payload, callback, addUserId, setOaut
 			self.userId = response.data._id;
 		}
 		if(setOauth){
-			self.headers['X-SP-USER'] = response.data.oauth_key + self.headers['X-SP-USER'];
+			self.headers['X-SP-USER'] = response.data.oauth_key + '|' + self.options['fingerprint'];
 		}
 		callback(response.data);
 	}).catch(function(response){
