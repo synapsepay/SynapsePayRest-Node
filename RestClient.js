@@ -26,7 +26,7 @@ var RestClient = function(options, userId){
 };
 
 RestClient.prototype.updateHeaders = function(options, userId){
-	this.options = options;
+	this.clientOptions = options;
 	if(userId){
 		this.userId = userId;
 	}
