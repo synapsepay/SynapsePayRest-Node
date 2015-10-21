@@ -19,7 +19,7 @@ Users.prototype.get = function(options, callback){
 	var path = this.createUserPath();
 	var addUserId = false;
 	if(options.user_id){
-		addUserId = true;
+		addUserId = false;
 		path = this.createUserPath(options.user_id);
 	}else{
 		if(options.query){

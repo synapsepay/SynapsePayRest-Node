@@ -17,6 +17,21 @@ var USER_ID = ID of user # optional
 
 var client = SynapsePayClient(headers, USER_ID);
 
+# Update Headers
+
+var new_headers = {
+	'oauth_key' : USER_OAUTH KEY, # Optional
+	'fingerprint' : USER_FINGERPRINT,
+	'client_id' :  YOUR_CLIENT_ID,
+	'client_secret' :  YOUR_CLIENT_SECRET,
+	'ip_address' :  USER_IP_ADDRESS,
+	'development_mode' :  true #true will ping sandbox.synapsepay.com while false will ping synapsepay.com
+};
+
+var new_user_id = NEW_USER_ID;
+
+client.Client.updateHeaders(new_headers, new_user_id);
+
 ```
 
 ## Function Callbacks

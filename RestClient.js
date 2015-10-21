@@ -3,14 +3,7 @@ var HelperFunctions = require('./HelperFunctions.js');
 
 var RestClient = function(options, userId){
 
-	this.options = options;
-
-	var xSpGateway = options.client_id + '|' + options.client_secret;
-
-	var xSpUser = '|' + options.fingerprint;
-	if(options.oauth_key){
-		xSpUser = options.oauth_key + xSpUser;
-	}
+	this.clientOptions = options;
 
 	this.baseUrl = 'https://synapsepay.com/api/3';
 	if(options.development_mode){
@@ -18,19 +11,6 @@ var RestClient = function(options, userId){
 			this.baseUrl = 'https://sandbox.synapsepay.com/api/3';
 		}
 	}
-
-	var xSpLang = 'en';
-	if('lang'.indexOf(options) > 0){
-		xSpLang = options.lang;
-	}
-	this.headers = {
-		'Content-Type':'application/json',
-		'X-SP-USER': xSpUser,
-		'X-SP-GATEWAY': xSpGateway,
-		'X-SP-USER-IP': options.ip_address,
-		'X-SP-PROD':'NO',
-		'X-SP-LANG':xSpLang
-	};
 
 	this.userId = userId;
 
@@ -45,16 +25,44 @@ var RestClient = function(options, userId){
 	};
 };
 
+RestClient.prototype.updateHeaders = function(options, userId){
+	this.options = options;
+	if(userId){
+		this.userId = userId;
+	}
+};
+
+RestClient.prototype.createHeaders = function(){
+
+	var xSpGateway = this.clientOptions.client_id + '|' + this.clientOptions.client_secret;
+
+	var xSpUser = '|' + this.clientOptions.fingerprint;
+	if(this.clientOptions.oauth_key){
+		xSpUser = this.clientOptions.oauth_key + xSpUser;
+	}
+
+	var xSpLang = 'en';
+	if('lang'.indexOf(this.clientOptions) > 0){
+		xSpLang = this.clientOptions.lang;
+	}
+	var headers = {
+		'Content-Type':'application/json',
+		'X-SP-USER': xSpUser,
+		'X-SP-GATEWAY': xSpGateway,
+		'X-SP-USER-IP': this.clientOptions.ip_address,
+		'X-SP-PROD':'NO',
+		'X-SP-LANG':xSpLang
+	};
+	return headers;
+};
+
 RestClient.prototype.get = function(path, callback, addUserId){
 	var self = this;
 	axios({
 		url: this.baseUrl + path,
 		method: 'get',
-		headers: this.headers
+		headers: this.createHeaders()
 	}).then(function(response){
-		if(addUserId){
-			self.userId = response.data._id;
-		}
 		callback(response.data);
 	}).catch(function(response){
 		var message_object = self.handleError(response);
@@ -68,18 +76,20 @@ RestClient.prototype.post = function(path, payload, callback, addUserId, setOaut
 		url: this.baseUrl + path,
 		method: 'post',
 		data: payload,
-		headers: this.headers
+		headers: this.createHeaders()
 	}).then(function(response){
 		if(addUserId){
 			self.userId = response.data._id;
 		}
 		if(setOauth){
 			if(response.data.oauth_key){
-				self.headers['X-SP-USER'] = response.data.oauth_key + '|' + self.options['fingerprint'];
+				self.clientOptions['oauth_key'] = response.data.oauth_key;
 			}
 		}
 		callback(response.data);
 	}).catch(function(response){
+		console.log('what');
+		console.log(response);
 		var message_object = self.handleError(response);
 		callback(message_object);
 	});
@@ -91,7 +101,7 @@ RestClient.prototype.patch = function(path, payload, callback){
 		url: this.baseUrl + path,
 		method: 'patch',
 		data: payload,
-		headers: this.headers
+		headers: this.createHeaders()
 	}).then(function(response){
 		callback(response.data)
 	}).catch(function(response){
@@ -105,7 +115,7 @@ RestClient.prototype.del = function(path, callback){
 	axios({
 		url: this.baseUrl + path,
 		method: 'delete',
-		headers: this.headers
+		headers: this.createHeaders()
 	}).then(function(response){
 		callback(response.data);
 	}).catch(function(response){
