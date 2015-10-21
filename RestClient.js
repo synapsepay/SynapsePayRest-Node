@@ -74,7 +74,9 @@ RestClient.prototype.post = function(path, payload, callback, addUserId, setOaut
 			self.userId = response.data._id;
 		}
 		if(setOauth){
-			self.headers['X-SP-USER'] = response.data.oauth_key + '|' + self.options['fingerprint'];
+			if(response.data.oauth_key){
+				self.headers['X-SP-USER'] = response.data.oauth_key + '|' + self.options['fingerprint'];
+			}
 		}
 		callback(response.data);
 	}).catch(function(response){

@@ -1,6 +1,6 @@
 {
   "name": "synapse_pay_rest",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Node.js Library for SynapsePay API v3 Rest",
   "main": "SynapsePayClient.js",
   "scripts": {
