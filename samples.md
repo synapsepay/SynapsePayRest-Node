@@ -32,6 +32,10 @@ var new_user_id = NEW_USER_ID;
 
 client.Client.updateHeaders(new_headers, new_user_id);
 
+# Generate HMAC
+
+client.Client.createHMAC(webhook_payload);
+
 ```
 
 ## Function Callbacks
