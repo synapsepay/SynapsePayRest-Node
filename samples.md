@@ -276,7 +276,7 @@ var options = {
 
 # Get a Transaction
 
-var transaction_response = client.Trans.get(options, TRANS_ID, callback);
+var transaction_response = client.Trans.get(options, callback);
 
 # Get All Transactions
 

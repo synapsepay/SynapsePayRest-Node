@@ -1,5 +1,6 @@
 var axios = require('axios');
 var HelperFunctions = require('./HelperFunctions.js');
+var crypto = require('crypto');
 
 var RestClient = function(options, userId){
 
@@ -186,6 +187,12 @@ RestClient.prototype.handleError = function(response){
 			console.log(message);
 		}
     }
+};
+
+RestClient.prototype.createHMAC = function(payload){
+	var raw = payload._id.$oid+'+'+payload.recent_status.date.$date;
+	var hash = new Buffer(crypto.createHmac('sha1', this.clientOptions.client_secret).update(raw).digest('hex')).toString('base64').replace('\n','');
+	return hash;
 };
 
 module.exports = RestClient;

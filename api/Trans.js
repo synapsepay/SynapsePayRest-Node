@@ -27,8 +27,8 @@ Trans.prototype.delete = function(nodeId, transId, callback){
 
 Trans.prototype.get = function(options, callback){
 	var path = this.createTransactionPath(this.client.userId, options.node_id);
-	if(options.transId){
-		path += '/' + transId;
+	if(options.trans_id){
+		path += '/' + options.trans_id;
 	}else if(options.page){
 		path += '?page='+options.page;
 		if(options.per_page){
