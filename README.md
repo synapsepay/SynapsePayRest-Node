@@ -1,4 +1,10 @@
-## SynapsePayRest-Node
+## [DEPRECATED] SynapsePayRest-Node
+
+<div class="warning">
+    <p class="first admonition-title">Deprecated</p>
+    <p class="last">Currently supported https://github.com/synapsepayments/SynapsePay-Node</p>
+</div>
+
 
 Simple API wrapper for SynapsePay REST V3 API.  This wrapper aims to handle the headers for each API request and appropriate error handling.
 
